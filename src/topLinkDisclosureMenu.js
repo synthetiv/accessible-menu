@@ -445,18 +445,20 @@ class TopLinkDisclosureMenu extends BaseMenu {
           this.focusChild(index);
 
           let toggle = menuItem.isSubmenuItem ? menuItem.elements.toggle : null;
+          let item = menuItem.isSubmenuItem ? menuItem : null;
 
           // Hovering over both the menu item _and_ the toggle item should work.
           if (menuItem.elements.sibling !== null) {
             toggle = menuItem.elements.sibling.elements.toggle;
+            item = menuItem.elements.sibling;
           }
 
-          // If there is no toggle, exit out of the event.
-          if (toggle === null) return;
+          // If there is no toggle or item, exit out of the event.
+          if (toggle === null || item === null) return;
 
           if (this.enterDelay > 0) {
-            clearTimeout(this._hoverTimeout);
-            this._hoverTimeout = setTimeout(() => {
+            clearTimeout(item.hoverTimeout);
+            item.hoverTimeout = setTimeout(() => {
               toggle.preview();
             }, this.enterDelay);
           } else {
@@ -482,18 +484,20 @@ class TopLinkDisclosureMenu extends BaseMenu {
             let toggle = menuItem.isSubmenuItem
               ? menuItem.elements.toggle
               : null;
+            let item = menuItem.isSubmenuItem ? menuItem : null;
 
             // Hovering over both the menu item _and_ the toggle item should work.
             if (menuItem.elements.sibling !== null) {
               toggle = menuItem.elements.sibling.elements.toggle;
+              item = menuItem.elements.sibling;
             }
 
-            // If there is no toggle, exit out of the event.
-            if (toggle === null) return;
+            // If there is no toggle or item, exit out of the event.
+            if (toggle === null || item === null) return;
 
             if (this.enterDelay > 0) {
-              clearTimeout(this._hoverTimeout);
-              this._hoverTimeout = setTimeout(() => {
+              clearTimeout(item.hoverTimeout);
+              item.hoverTimeout = setTimeout(() => {
                 toggle.preview();
               }, this.enterDelay);
             } else {
@@ -512,8 +516,8 @@ class TopLinkDisclosureMenu extends BaseMenu {
 
           if (this.hoverType === "on") {
             if (this.leaveDelay > 0) {
-              clearTimeout(this._hoverTimeout);
-              this._hoverTimeout = setTimeout(() => {
+              clearTimeout(menuItem.hoverTimeout);
+              menuItem.hoverTimeout = setTimeout(() => {
                 this.currentEvent = "mouse";
                 menuItem.elements.toggle.close();
               }, this.leaveDelay);
@@ -524,8 +528,8 @@ class TopLinkDisclosureMenu extends BaseMenu {
           } else if (this.hoverType === "dynamic") {
             if (!this.isTopLevel) {
               if (this.leaveDelay > 0) {
-                clearTimeout(this._hoverTimeout);
-                this._hoverTimeout = setTimeout(() => {
+                clearTimeout(menuItem.hoverTimeout);
+                menuItem.hoverTimeout = setTimeout(() => {
                   this.currentEvent = "mouse";
                   menuItem.elements.toggle.close();
                   this.focusCurrentChild();
@@ -551,7 +555,7 @@ class TopLinkDisclosureMenu extends BaseMenu {
             (this.hoverType === "on" || this.hoverType === "dynamic") &&
             this.leaveDelay > 0
           ) {
-            clearTimeout(this._hoverTimeout);
+            clearTimeout(menuItem.hoverTimeout);
           }
         });
       }
