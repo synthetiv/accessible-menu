@@ -110,4 +110,30 @@ describe("BaseMenuItem public methods", () => {
       expect(spy).toHaveBeenCalled();
     });
   });
+
+  // Test BaseMenuItem clearTimeout().
+  describe("clearTimeout", () => {
+    // Test that clearTimeout clears the timeout.
+    it("should clear the timeout", () => {
+      // Create a new BaseMenu instance for testing.
+      const menu = new BaseMenu({
+        menuElement: document.querySelector("ul"),
+        submenuItemSelector: "li.dropdown",
+        containerElement: document.querySelector("nav"),
+        controllerElement: document.querySelector("button"),
+      });
+      initializeMenu(menu);
+
+      const menuItem = menu.elements.menuItems[0];
+
+      // Set up to check for clearTimeout.
+      const spy = vi.spyOn(window, "clearTimeout");
+
+      menuItem.clearTimeout();
+
+      expect(spy).toHaveBeenCalledWith(
+        menu.elements.menuItems[0]._hoverTimeout
+      );
+    });
+  });
 });
