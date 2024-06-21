@@ -150,6 +150,13 @@ class BaseMenuItem {
   }
 
   /**
+   * Clears the hover timeout.
+   */
+  clearTimeout() {
+    clearTimeout(this._hoverTimeout);
+  }
+
+  /**
    * Focuses the menu item's link if the parent menu's
    * shouldFocus value is `true`.
    *

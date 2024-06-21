@@ -1219,7 +1219,7 @@ class BaseMenu {
 
           if (menuItem.isSubmenuItem) {
             if (this.enterDelay > 0) {
-              clearTimeout(menuItem.hoverTimeout);
+              menuItem.clearTimeout();
               menuItem.hoverTimeout = setTimeout(() => {
                 menuItem.elements.toggle.preview();
               }, this.enterDelay);
@@ -1246,7 +1246,7 @@ class BaseMenu {
             this.focusCurrentChild();
 
             if (this.enterDelay > 0) {
-              clearTimeout(menuItem.hoverTimeout);
+              menuItem.clearTimeout();
               menuItem.hoverTimeout = setTimeout(() => {
                 menuItem.elements.toggle.preview();
               }, this.enterDelay);
@@ -1266,7 +1266,7 @@ class BaseMenu {
 
           if (this.hoverType === "on") {
             if (this.leaveDelay > 0) {
-              clearTimeout(menuItem.hoverTimeout);
+              menuItem.clearTimeout();
               menuItem.hoverTimeout = setTimeout(() => {
                 this.currentEvent = "mouse";
                 menuItem.elements.toggle.close();
@@ -1278,7 +1278,7 @@ class BaseMenu {
           } else if (this.hoverType === "dynamic") {
             if (!this.isTopLevel) {
               if (this.leaveDelay > 0) {
-                clearTimeout(menuItem.hoverTimeout);
+                menuItem.clearTimeout();
                 menuItem.hoverTimeout = setTimeout(() => {
                   this.currentEvent = "mouse";
                   menuItem.elements.toggle.close();
@@ -1305,7 +1305,7 @@ class BaseMenu {
             (this.hoverType === "on" || this.hoverType === "dynamic") &&
             this.leaveDelay > 0
           ) {
-            clearTimeout(menuItem.hoverTimeout);
+            menuItem.clearTimeout();
           }
         });
       }

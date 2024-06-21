@@ -457,7 +457,7 @@ class TopLinkDisclosureMenu extends BaseMenu {
           if (toggle === null || item === null) return;
 
           if (this.enterDelay > 0) {
-            clearTimeout(item.hoverTimeout);
+            item.clearTimeout();
             item.hoverTimeout = setTimeout(() => {
               toggle.preview();
             }, this.enterDelay);
@@ -496,7 +496,7 @@ class TopLinkDisclosureMenu extends BaseMenu {
             if (toggle === null || item === null) return;
 
             if (this.enterDelay > 0) {
-              clearTimeout(item.hoverTimeout);
+              item.clearTimeout();
               item.hoverTimeout = setTimeout(() => {
                 toggle.preview();
               }, this.enterDelay);
@@ -516,7 +516,7 @@ class TopLinkDisclosureMenu extends BaseMenu {
 
           if (this.hoverType === "on") {
             if (this.leaveDelay > 0) {
-              clearTimeout(menuItem.hoverTimeout);
+              menuItem.clearTimeout();
               menuItem.hoverTimeout = setTimeout(() => {
                 this.currentEvent = "mouse";
                 menuItem.elements.toggle.close();
@@ -528,7 +528,7 @@ class TopLinkDisclosureMenu extends BaseMenu {
           } else if (this.hoverType === "dynamic") {
             if (!this.isTopLevel) {
               if (this.leaveDelay > 0) {
-                clearTimeout(menuItem.hoverTimeout);
+                menuItem.clearTimeout();
                 menuItem.hoverTimeout = setTimeout(() => {
                   this.currentEvent = "mouse";
                   menuItem.elements.toggle.close();
@@ -555,7 +555,7 @@ class TopLinkDisclosureMenu extends BaseMenu {
             (this.hoverType === "on" || this.hoverType === "dynamic") &&
             this.leaveDelay > 0
           ) {
-            clearTimeout(menuItem.hoverTimeout);
+            menuItem.clearTimeout();
           }
         });
       }
