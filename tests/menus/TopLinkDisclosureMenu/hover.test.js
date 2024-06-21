@@ -13,7 +13,7 @@ import {
 } from "vitest";
 import { threeLevelDisclosureTopLink } from "../../../demo/menus.js";
 import TopLinkDisclosureMenu from "../../../src/topLinkDisclosureMenu.js";
-import { simulatePointerEvent, PointerEvent, wait } from "../helpers.js";
+import { simulatePointerEvent, PointerEvent } from "../helpers.js";
 
 beforeAll(() => {
   // Extend jsdom MouseEvent class as PointerEvent class.
@@ -23,11 +23,18 @@ beforeAll(() => {
 beforeEach(() => {
   // Create the test menu.
   document.body.innerHTML = threeLevelDisclosureTopLink;
+
+  // Make sure to use fake timers.
+  vi.useFakeTimers({ shouldAdvanceTime: true });
 });
 
 afterEach(() => {
   // Remove the test menu.
   document.body.innerHTML = "";
+
+  // Restore the timers.
+  vi.runOnlyPendingTimers();
+  vi.useRealTimers();
 });
 
 // Test hover events on the TopLinkDisclosureMenu.
@@ -103,7 +110,7 @@ describe("TopLinkDisclosureMenu", () => {
         }
       );
       // Test that preview is called after a delay when a submenu item is hovered.
-      it("should call preview after a delay when a submenu item is hovered", async () => {
+      it("should call preview after a delay when a submenu item is hovered", () => {
         // Create a new TopLinkDisclosureMenu instance for testing.
         const menu = new TopLinkDisclosureMenu({
           menuElement: document.querySelector("ul"),
@@ -122,13 +129,16 @@ describe("TopLinkDisclosureMenu", () => {
           menu.elements.menuItems[2].dom.link
         );
 
-        // Wait for the preview delay to pass.
-        await wait(menu.enterDelay);
+        // Advance the timers by the menu's enter delay.
+        vi.advanceTimersByTime(menu.enterDelay);
 
-        expect(spy).toHaveBeenCalled();
+        vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+          timeout: 10000,
+          interval: 10,
+        });
       });
       // Test that preview is called after a delay when a sibling of a submenu item is hovered.
-      it("should call preview after a delay when a sibling of a submenu item is hovered", async () => {
+      it("should call preview after a delay when a sibling of a submenu item is hovered", () => {
         // Create a new TopLinkDisclosureMenu instance for testing.
         const menu = new TopLinkDisclosureMenu({
           menuElement: document.querySelector("ul"),
@@ -147,10 +157,13 @@ describe("TopLinkDisclosureMenu", () => {
           menu.elements.menuItems[1].dom.link
         );
 
-        // Wait for the preview delay to pass.
-        await wait(menu.enterDelay);
+        // Advance the timers by the menu's enter delay.
+        vi.advanceTimersByTime(menu.enterDelay);
 
-        expect(spy).toHaveBeenCalled();
+        vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+          timeout: 10000,
+          interval: 10,
+        });
       });
       // Test that preview is called immediately when a submenu item is hovered and enterDelay is set to 0.
       it("should call preview immediately when a submenu item is hovered and enterDelay is set to 0", () => {
@@ -248,7 +261,7 @@ describe("TopLinkDisclosureMenu", () => {
           expect(spy).not.toHaveBeenCalled();
         });
         // Test that the menu's current event is set to mouse after a delay when a menu item is unhovered.
-        it("should set the menu's current event to mouse after a delay when a menu item is unhovered", async () => {
+        it("should set the menu's current event to mouse after a delay when a menu item is unhovered", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
           const menu = new TopLinkDisclosureMenu({
             menuElement: document.querySelector("ul"),
@@ -264,13 +277,16 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.menuItems[1].dom.link
           );
 
-          // Wait for the enter delay to pass.
-          await wait(menu.enterDelay);
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
 
-          expect(menu.currentEvent).toBe("mouse");
+          vi.waitFor(() => expect(menu.currentEvent).toBe("mouse"), {
+            timeout: 10000,
+            interval: 10,
+          });
         });
         // Test that the menu's current menu toggle's close method is called after a delay when a menu item is unhovered.
-        it("should call the menu's current menu toggle's close method after a delay when a menu item is unhovered", async () => {
+        it("should call the menu's current menu toggle's close method after a delay when a menu item is unhovered", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
           const menu = new TopLinkDisclosureMenu({
             menuElement: document.querySelector("ul"),
@@ -289,10 +305,13 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.menuItems[1].dom.link
           );
 
-          // Wait for the enter delay to pass.
-          await wait(menu.enterDelay);
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
 
-          expect(spy).toHaveBeenCalled();
+          vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+            timeout: 10000,
+            interval: 10,
+          });
         });
         // Test that the menu's current event is set to mouse immediately when a menu item is unhovered and leaveDelay is set to 0.
         it("should set the menu's current event to mouse immediately when a menu item is unhovered and leaveDelay is set to 0", () => {
@@ -656,7 +675,7 @@ describe("TopLinkDisclosureMenu", () => {
           expect(spy).toHaveBeenCalled();
         });
         // Test that preview is called after a delay.
-        it("should call preview after a delay", async () => {
+        it("should call preview after a delay", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
           const menu = new TopLinkDisclosureMenu({
             menuElement: document.querySelector("ul"),
@@ -683,9 +702,13 @@ describe("TopLinkDisclosureMenu", () => {
               .menuItems[1].dom.link
           );
 
-          await wait(menu.enterDelay);
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
 
-          expect(spy).toHaveBeenCalled();
+          vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+            timeout: 10000,
+            interval: 10,
+          });
         });
         // Test that preview is called immediately when enterDelay is set to 0.
         it("should call preview immediately when enterDelay is set to 0", () => {
@@ -793,7 +816,7 @@ describe("TopLinkDisclosureMenu", () => {
           expect(spy).toHaveBeenCalled();
         });
         // Test that preview is called after a delay.
-        it("should call preview after a delay", async () => {
+        it("should call preview after a delay", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
           const menu = new TopLinkDisclosureMenu({
             menuElement: document.querySelector("ul"),
@@ -815,9 +838,13 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.menuItems[4].dom.link
           );
 
-          await wait(menu.enterDelay);
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
 
-          expect(spy).toHaveBeenCalled();
+          vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+            timeout: 10000,
+            interval: 10,
+          });
         });
         // Test that preview is called immediately when enterDelay is set to 0.
         it("should call preview immediately when enterDelay is set to 0", () => {
@@ -848,7 +875,7 @@ describe("TopLinkDisclosureMenu", () => {
       });
       describe("if the menu item is sibling of a submenu item and the menu is the root menu with an open submenu", () => {
         // Test that preview is called after a delay.
-        it("should call preview after a delay", async () => {
+        it("should call preview after a delay", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
           const menu = new TopLinkDisclosureMenu({
             menuElement: document.querySelector("ul"),
@@ -870,9 +897,13 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.menuItems[3].dom.link
           );
 
-          await wait(menu.enterDelay);
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
 
-          expect(spy).toHaveBeenCalled();
+          vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+            timeout: 10000,
+            interval: 10,
+          });
         });
         // Test that preview is called immediately when enterDelay is set to 0.
         it("should call preview immediately when enterDelay is set to 0", () => {
@@ -907,7 +938,7 @@ describe("TopLinkDisclosureMenu", () => {
       describe("if the menu is not the root menu", () => {
         describe("when a menu item is a submenu item", () => {
           // Test that clearTimeout is called when a menu item is unhovered.
-          it("should call clearTimeout when a menu item is unhovered", async () => {
+          it("should call clearTimeout when a menu item is unhovered", () => {
             // Create a new TopLinkDisclosureMenu instance for testing.
             const menu = new TopLinkDisclosureMenu({
               menuElement: document.querySelector("ul"),
@@ -921,8 +952,11 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.submenuToggles[0].open();
 
             // Spy on the window's clearTimeout method.
-            const spy = vi.spyOn(menu.elements.submenuToggles[0].elements.controlledMenu.elements
-                .menuItems[1], "clearTimeout");
+            const spy = vi.spyOn(
+              menu.elements.submenuToggles[0].elements.controlledMenu.elements
+                .menuItems[1],
+              "clearTimeout"
+            );
 
             // Simulate the pointerleave event.
             simulatePointerEvent(
@@ -931,9 +965,13 @@ describe("TopLinkDisclosureMenu", () => {
                 .menuItems[1].dom.link
             );
 
-            await wait(menu.leaveDelay);
+            // Advance the timers by the menu's leave delay.
+            vi.advanceTimersByTime(menu.leaveDelay);
 
-            expect(spy).toHaveBeenCalled();
+            vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+              timeout: 10000,
+              interval: 10,
+            });
           });
           // Test that clearTimeout is not called when a menu item is unhovered and leaveDelay is set to 0.
           it("should not call clearTimeout when a menu item is unhovered and leaveDelay is set to 0", () => {
@@ -951,8 +989,11 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.submenuToggles[0].open();
 
             // Spy on the window's clearTimeout method.
-            const spy = vi.spyOn(menu.elements.submenuToggles[0].elements.controlledMenu.elements
-                .menuItems[1], "clearTimeout");
+            const spy = vi.spyOn(
+              menu.elements.submenuToggles[0].elements.controlledMenu.elements
+                .menuItems[1],
+              "clearTimeout"
+            );
 
             // Simulate the pointerleave event.
             simulatePointerEvent(
@@ -964,7 +1005,7 @@ describe("TopLinkDisclosureMenu", () => {
             expect(spy).not.toHaveBeenCalled();
           });
           // Test that the menu's current event is set to mouse after a delay when a menu item is unhovered.
-          it("should set the menu's current event to mouse after a delay when a menu item is unhovered", async () => {
+          it("should set the menu's current event to mouse after a delay when a menu item is unhovered", () => {
             // Create a new TopLinkDisclosureMenu instance for testing.
             const menu = new TopLinkDisclosureMenu({
               menuElement: document.querySelector("ul"),
@@ -984,15 +1025,20 @@ describe("TopLinkDisclosureMenu", () => {
                 .menuItems[1].dom.link
             );
 
-            await wait(menu.leaveDelay);
+            // Advance the timers by the menu's leave delay.
+            vi.advanceTimersByTime(menu.leaveDelay);
 
-            expect(
-              menu.elements.submenuToggles[0].elements.controlledMenu
-                .currentEvent
-            ).toBe("mouse");
+            vi.waitFor(
+              () =>
+                expect(
+                  menu.elements.submenuToggles[0].elements.controlledMenu
+                    .currentEvent
+                ).toBe("mouse"),
+              { timeout: 10000, interval: 10 }
+            );
           });
           // Test that the menu's current menu toggle's close method is called after a delay when a menu item is unhovered.
-          it("should call the menu's current menu toggle's close method after a delay when a menu item is unhovered", async () => {
+          it("should call the menu's current menu toggle's close method after a delay when a menu item is unhovered", () => {
             // Create a new TopLinkDisclosureMenu instance for testing.
             const menu = new TopLinkDisclosureMenu({
               menuElement: document.querySelector("ul"),
@@ -1019,12 +1065,16 @@ describe("TopLinkDisclosureMenu", () => {
                 .menuItems[1].dom.link
             );
 
-            await wait(menu.leaveDelay);
+            // Advance the timers by the menu's leave delay.
+            vi.advanceTimersByTime(menu.leaveDelay);
 
-            expect(spy).toHaveBeenCalled();
+            vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+              timeout: 10000,
+              interval: 10,
+            });
           });
           // Test that the menu's focusCurrentChild method is called after a delay when a menu item is unhovered.
-          it("should call the menu's focusCurrentChild method after a delay when a menu item is unhovered", async () => {
+          it("should call the menu's focusCurrentChild method after a delay when a menu item is unhovered", () => {
             // Create a new TopLinkDisclosureMenu instance for testing.
             const menu = new TopLinkDisclosureMenu({
               menuElement: document.querySelector("ul"),
@@ -1050,9 +1100,13 @@ describe("TopLinkDisclosureMenu", () => {
                 .menuItems[1].dom.link
             );
 
-            await wait(menu.leaveDelay);
+            // Advance the timers by the menu's leave delay.
+            vi.advanceTimersByTime(menu.leaveDelay);
 
-            expect(spy).toHaveBeenCalled();
+            vi.waitFor(() => expect(spy).toHaveBeenCalled(), {
+              timeout: 10000,
+              interval: 10,
+            });
           });
           // Test that the menu's current event is set to mouse immediately when a menu item is unhovered and leaveDelay is set to 0.
           it("should set the menu's current event to mouse immediately when a menu item is unhovered and leaveDelay is set to 0", () => {
