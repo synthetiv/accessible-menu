@@ -116,6 +116,29 @@ describe("BaseMenu", () => {
           expect(spy).toHaveBeenCalledWith(i);
         }
       );
+      // Test that clearTimeout is called when a submenu item is hovered.
+      it("should call clearTimeout when a submenu item is hovered", () => {
+        // Create a new BaseMenu instance for testing.
+        const menu = new BaseMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "on",
+        });
+        initializeMenu(menu);
+
+        // Spy on the menu item's clearTimeout method.
+        const spy = vi.spyOn(menu.elements.menuItems[1], "clearTimeout");
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[1].dom.link
+        );
+
+        expect(spy).toHaveBeenCalled();
+      });
       // Test that preview is called after a delay when a submenu item is hovered.
       it("should call preview after a delay when a submenu item is hovered", () => {
         // Create a new BaseMenu instance for testing.
@@ -650,6 +673,37 @@ describe("BaseMenu", () => {
 
           expect(spy).toHaveBeenCalled();
         });
+        // Test that clearTimeout is called.
+        it("should call clearTimeout", () => {
+          // Create a new BaseMenu instance for testing.
+          const menu = new BaseMenu({
+            menuElement: document.querySelector("ul"),
+            submenuItemSelector: "li.dropdown",
+            containerElement: document.querySelector("nav"),
+            controllerElement: document.querySelector("button"),
+            hoverType: "dynamic",
+          });
+          initializeMenu(menu);
+
+          menu.currentChild = 1;
+          menu.elements.submenuToggles[0].open();
+
+          // Spy on the menu item's clearTimeout method.
+          const spy = vi.spyOn(
+            menu.elements.submenuToggles[0].elements.controlledMenu.elements
+              .menuItems[1],
+            "clearTimeout"
+          );
+
+          // Simulate the pointerenter event.
+          simulatePointerEvent(
+            "pointerenter",
+            menu.elements.submenuToggles[0].elements.controlledMenu.elements
+              .menuItems[1].dom.link
+          );
+
+          expect(spy).toHaveBeenCalled();
+        });
         // Test that preview is called after a delay.
         it("should call preview after a delay", () => {
           // Create a new BaseMenu instance for testing.
@@ -793,6 +847,35 @@ describe("BaseMenu", () => {
             "pointerenter",
             menu.elements.menuItems[2].dom.link
           );
+
+          expect(spy).toHaveBeenCalled();
+        });
+        // Test that clearTimeout is called.
+        it("should call clearTimeout", () => {
+          // Create a new BaseMenu instance for testing.
+          const menu = new BaseMenu({
+            menuElement: document.querySelector("ul"),
+            submenuItemSelector: "li.dropdown",
+            containerElement: document.querySelector("nav"),
+            controllerElement: document.querySelector("button"),
+            hoverType: "dynamic",
+          });
+          initializeMenu(menu);
+
+          menu.currentChild = 1;
+          menu.elements.submenuToggles[0].open();
+
+          // Spy on the menu items's clearTimeout method.
+          const spy = vi.spyOn(menu.elements.menuItems[2], "clearTimeout");
+
+          // Simulate the pointerenter event.
+          simulatePointerEvent(
+            "pointerenter",
+            menu.elements.menuItems[2].dom.link
+          );
+
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
 
           expect(spy).toHaveBeenCalled();
         });
