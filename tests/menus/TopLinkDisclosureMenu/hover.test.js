@@ -214,15 +214,15 @@ describe("TopLinkDisclosureMenu", () => {
           });
 
           // Spy on clearTimeout.
-          const spy = vi.spyOn(window, "clearTimeout");
+          const spy = vi.spyOn(menu.elements.menuItems[2], "clearTimeout");
 
           // Simulate the pointerleave event.
           simulatePointerEvent(
             "pointerleave",
-            menu.elements.menuItems[1].dom.link
+            menu.elements.menuItems[2].dom.link
           );
 
-          expect(spy).toHaveBeenCalledWith(menu._hoverTimeout);
+          expect(spy).toHaveBeenCalled();
         });
         // Test that clearTimeout is not called when a menu item is unhovered and leaveDelay is set to 0.
         it("should not call clearTimeout when a menu item is unhovered and leaveDelay is set to 0", () => {
@@ -237,12 +237,12 @@ describe("TopLinkDisclosureMenu", () => {
           });
 
           // Spy on clearTimeout.
-          const spy = vi.spyOn(window, "clearTimeout");
+          const spy = vi.spyOn(menu.elements.menuItems[2], "clearTimeout");
 
           // Simulate the pointerleave event.
           simulatePointerEvent(
             "pointerleave",
-            menu.elements.menuItems[1].dom.link
+            menu.elements.menuItems[2].dom.link
           );
 
           expect(spy).not.toHaveBeenCalled();
@@ -858,7 +858,7 @@ describe("TopLinkDisclosureMenu", () => {
             hoverType: "dynamic",
           });
 
-          menu.currentChild = 1;
+          menu.currentChild = 2;
           menu.elements.submenuToggles[0].open();
 
           // Spy on the menu's preview method.
@@ -921,7 +921,8 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.submenuToggles[0].open();
 
             // Spy on the window's clearTimeout method.
-            const spy = vi.spyOn(window, "clearTimeout");
+            const spy = vi.spyOn(menu.elements.submenuToggles[0].elements.controlledMenu.elements
+                .menuItems[1], "clearTimeout");
 
             // Simulate the pointerleave event.
             simulatePointerEvent(
@@ -932,10 +933,7 @@ describe("TopLinkDisclosureMenu", () => {
 
             await wait(menu.leaveDelay);
 
-            expect(spy).toHaveBeenCalledWith(
-              menu.elements.submenuToggles[0].elements.controlledMenu
-                ._hoverTimeout
-            );
+            expect(spy).toHaveBeenCalled();
           });
           // Test that clearTimeout is not called when a menu item is unhovered and leaveDelay is set to 0.
           it("should not call clearTimeout when a menu item is unhovered and leaveDelay is set to 0", () => {
@@ -953,7 +951,8 @@ describe("TopLinkDisclosureMenu", () => {
             menu.elements.submenuToggles[0].open();
 
             // Spy on the window's clearTimeout method.
-            const spy = vi.spyOn(window, "clearTimeout");
+            const spy = vi.spyOn(menu.elements.submenuToggles[0].elements.controlledMenu.elements
+                .menuItems[1], "clearTimeout");
 
             // Simulate the pointerleave event.
             simulatePointerEvent(
