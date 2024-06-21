@@ -109,6 +109,31 @@ describe("TopLinkDisclosureMenu", () => {
           expect(spy).toHaveBeenCalledWith(i);
         }
       );
+      // Test that clearTimeout is called when a submenu item is hovered.
+      it("should call clearTimeout when a submenu item is hovered", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "on",
+        });
+
+        // Spy on the menu item's clearTimeout method.
+        const spy = vi.spyOn(menu.elements.menuItems[2], "clearTimeout");
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[2].dom.link
+        );
+
+        // Advance the timers by the menu's enter delay.
+        vi.advanceTimersByTime(menu.enterDelay);
+
+        expect(spy).toHaveBeenCalled();
+      });
       // Test that preview is called after a delay when a submenu item is hovered.
       it("should call preview after a delay when a submenu item is hovered", () => {
         // Create a new TopLinkDisclosureMenu instance for testing.
@@ -136,6 +161,31 @@ describe("TopLinkDisclosureMenu", () => {
           timeout: 10000,
           interval: 10,
         });
+      });
+      // Test that clearTimeout is called when a sibling of a submenu item is hovered.
+      it("should call clearTimeout when a sibling of a submenu item is hovered", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "on",
+        });
+
+        // Spy on the menu item's clearTimeout method.
+        const spy = vi.spyOn(menu.elements.menuItems[2], "clearTimeout");
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[1].dom.link
+        );
+
+        // Advance the timers by the menu's enter delay.
+        vi.advanceTimersByTime(menu.enterDelay);
+
+        expect(spy).toHaveBeenCalled();
       });
       // Test that preview is called after a delay when a sibling of a submenu item is hovered.
       it("should call preview after a delay when a sibling of a submenu item is hovered", () => {
@@ -674,6 +724,39 @@ describe("TopLinkDisclosureMenu", () => {
 
           expect(spy).toHaveBeenCalled();
         });
+        // Test that clearTimeout is called.
+        it("should call clearTimeout", () => {
+          // Create a new TopLinkDisclosureMenu instance for testing.
+          const menu = new TopLinkDisclosureMenu({
+            menuElement: document.querySelector("ul"),
+            submenuItemSelector: "li.dropdown",
+            containerElement: document.querySelector("nav"),
+            controllerElement: document.querySelector("button"),
+            hoverType: "dynamic",
+          });
+
+          menu.currentChild = 1;
+          menu.elements.submenuToggles[0].open();
+
+          // Spy on the menu item's clearTimeout method.
+          const spy = vi.spyOn(
+            menu.elements.submenuToggles[0].elements.controlledMenu.elements
+              .menuItems[1],
+            "clearTimeout"
+          );
+
+          // Simulate the pointerenter event.
+          simulatePointerEvent(
+            "pointerenter",
+            menu.elements.submenuToggles[0].elements.controlledMenu.elements
+              .menuItems[1].dom.link
+          );
+
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
+
+          expect(spy).toHaveBeenCalled();
+        });
         // Test that preview is called after a delay.
         it("should call preview after a delay", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
@@ -815,6 +898,34 @@ describe("TopLinkDisclosureMenu", () => {
 
           expect(spy).toHaveBeenCalled();
         });
+        // Test that clearTimeout is called.
+        it("should call clearTimeout", () => {
+          // Create a new TopLinkDisclosureMenu instance for testing.
+          const menu = new TopLinkDisclosureMenu({
+            menuElement: document.querySelector("ul"),
+            submenuItemSelector: "li.dropdown",
+            containerElement: document.querySelector("nav"),
+            controllerElement: document.querySelector("button"),
+            hoverType: "dynamic",
+          });
+
+          menu.currentChild = 1;
+          menu.elements.submenuToggles[0].open();
+
+          // Spy on the menu item's clearTimeout method.
+          const spy = vi.spyOn(menu.elements.menuItems[4], "clearTimeout");
+
+          // Simulate the pointerenter event.
+          simulatePointerEvent(
+            "pointerenter",
+            menu.elements.menuItems[4].dom.link
+          );
+
+          // Advance the timers by the menu's enter delay.
+          vi.advanceTimersByTime(menu.enterDelay);
+
+          expect(spy).toHaveBeenCalled();
+        });
         // Test that preview is called after a delay.
         it("should call preview after a delay", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
@@ -874,6 +985,31 @@ describe("TopLinkDisclosureMenu", () => {
         });
       });
       describe("if the menu item is sibling of a submenu item and the menu is the root menu with an open submenu", () => {
+        // Test that clearTimeout is called.
+        it("should call clearTimeout", () => {
+          // Create a new TopLinkDisclosureMenu instance for testing.
+          const menu = new TopLinkDisclosureMenu({
+            menuElement: document.querySelector("ul"),
+            submenuItemSelector: "li.dropdown",
+            containerElement: document.querySelector("nav"),
+            controllerElement: document.querySelector("button"),
+            hoverType: "dynamic",
+          });
+
+          menu.currentChild = 2;
+          menu.elements.submenuToggles[0].open();
+
+          // Spy on the menu item's clearTimeout method.
+          const spy = vi.spyOn(menu.elements.menuItems[4], "clearTimeout");
+
+          // Simulate the pointerenter event.
+          simulatePointerEvent(
+            "pointerenter",
+            menu.elements.menuItems[3].dom.link
+          );
+
+          expect(spy).toHaveBeenCalled();
+        });
         // Test that preview is called after a delay.
         it("should call preview after a delay", () => {
           // Create a new TopLinkDisclosureMenu instance for testing.
