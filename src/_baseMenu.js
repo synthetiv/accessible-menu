@@ -1085,9 +1085,23 @@ class BaseMenu {
 
   /**
    * Clears the hover timeout.
+   *
+   * @protected
    */
   _clearTimeout() {
     clearTimeout(this._hoverTimeout);
+  }
+
+  /**
+   * A wrapper for setTimeout that stores the timeout in the menu.
+   *
+   * @protected
+   *
+   * @param {Function} callback - The callback function to execute.
+   * @param {number}   delay    - The delay time in milliseconds.
+   */
+  _setTimeout(callback, delay) {
+    this._hoverTimeout = setTimeout(callback, delay);
   }
 
   /**
@@ -1237,7 +1251,7 @@ class BaseMenu {
           if (menuItem.isSubmenuItem) {
             if (this.enterDelay > 0) {
               this._clearTimeout();
-              this._hoverTimeout = setTimeout(() => {
+              this._setTimeout(() => {
                 menuItem.elements.toggle.preview();
               }, this.enterDelay);
             } else {
@@ -1264,7 +1278,7 @@ class BaseMenu {
 
             if (this.enterDelay > 0) {
               this._clearTimeout();
-              this._hoverTimeout = setTimeout(() => {
+              this._setTimeout(() => {
                 menuItem.elements.toggle.preview();
               }, this.enterDelay);
             } else {
@@ -1284,7 +1298,7 @@ class BaseMenu {
           if (this.hoverType === "on") {
             if (this.leaveDelay > 0) {
               this._clearTimeout();
-              this._hoverTimeout = setTimeout(() => {
+              this._setTimeout(() => {
                 this.currentEvent = "mouse";
                 menuItem.elements.toggle.close();
               }, this.leaveDelay);
@@ -1296,7 +1310,7 @@ class BaseMenu {
             if (!this.isTopLevel) {
               if (this.leaveDelay > 0) {
                 this._clearTimeout();
-                this._hoverTimeout = setTimeout(() => {
+                this._setTimeout(() => {
                   this.currentEvent = "mouse";
                   menuItem.elements.toggle.close();
                   this.focusCurrentChild();

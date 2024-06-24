@@ -170,4 +170,29 @@ describe("BaseMenu protected methods", () => {
       expect(spy).toHaveBeenCalledWith(menu._hoverTimeout);
     });
   });
+
+  // Test BaseMenu _setTimeout().
+  describe("_setTimeout", () => {
+    // Test that _setTimeout sets a timeout.
+    it("should set a timeout", () => {
+      // Create a new BaseMenu instance for testing.
+      const menu = new BaseMenu({
+        menuElement: document.querySelector("ul"),
+        submenuItemSelector: "li.dropdown",
+        containerElement: document.querySelector("nav"),
+        controllerElement: document.querySelector("button"),
+      });
+      initializeMenu(menu);
+
+      const callback = () => {};
+      const delay = 250;
+
+      // Set up to check for _setTimeout.
+      const spy = vi.spyOn(window, "setTimeout");
+
+      menu._setTimeout(callback, delay);
+
+      expect(spy).toHaveBeenCalledWith(callback, delay);
+    });
+  });
 });
