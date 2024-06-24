@@ -1093,7 +1093,7 @@ class BaseMenu {
   }
 
   /**
-   * A wrapper for setTimeout that stores the timeout in the menu.
+   * Sets the hover timeout.
    *
    * @protected
    *
@@ -1101,6 +1101,9 @@ class BaseMenu {
    * @param {number}   delay    - The delay time in milliseconds.
    */
   _setTimeout(callback, delay) {
+    isValidType("function", { callback });
+    isValidType("number", { delay });
+
     this._hoverTimeout = setTimeout(callback, delay);
   }
 
