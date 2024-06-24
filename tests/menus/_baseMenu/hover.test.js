@@ -1,5 +1,11 @@
 /**
  * Hover tests for the BaseMenu class.
+ *
+ * @todo Write tests for the following "hover on"/"hover dynamic" scenarios:
+ *   - Mouse enters a menu item, menu opens, mouse leaves menu item and comes back in before the timeout. Menu stays open.
+ *   - Mouse enters a menu item, menu opens, mouse leaves menu item, enters sibling item, leaves sibling item and comes back to original item before the timeout. Menu stays open.
+ *   - Mouse enters a menu item, menu opens, mouse leaves menu item, enters sibling submenu item, leaves sibling item and comes back to original item before the timeout. Menu stays open.
+ *   - Mouse enters a menu item, menu opens, mouse leaves menu item, enters parent menu sibling item, leaves sibling item and comes back to original item before the timeout. Menu stays open.
  */
 
 import {
