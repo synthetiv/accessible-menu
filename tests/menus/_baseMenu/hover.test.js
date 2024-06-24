@@ -128,8 +128,8 @@ describe("BaseMenu", () => {
         });
         initializeMenu(menu);
 
-        // Spy on the menu item's clearTimeout method.
-        const spy = vi.spyOn(menu.elements.menuItems[1], "clearTimeout");
+        // Spy on the menu's clearTimeout method.
+        const spy = vi.spyOn(menu, "clearTimeout");
 
         // Simulate the pointerenter event.
         simulatePointerEvent(
@@ -209,7 +209,7 @@ describe("BaseMenu", () => {
           initializeMenu(menu);
 
           // Spy on clearTimeout.
-          const spy = vi.spyOn(menu.elements.menuItems[1], "clearTimeout");
+          const spy = vi.spyOn(menu, "clearTimeout");
 
           // Simulate the pointerleave event.
           simulatePointerEvent(
@@ -233,7 +233,7 @@ describe("BaseMenu", () => {
           initializeMenu(menu);
 
           // Spy on clearTimeout.
-          const spy = vi.spyOn(menu.elements.menuItems[1], "clearTimeout");
+          const spy = vi.spyOn(menu, "clearTimeout");
 
           // Simulate the pointerleave event.
           simulatePointerEvent(
@@ -690,8 +690,7 @@ describe("BaseMenu", () => {
 
           // Spy on the menu item's clearTimeout method.
           const spy = vi.spyOn(
-            menu.elements.submenuToggles[0].elements.controlledMenu.elements
-              .menuItems[1],
+            menu.elements.submenuToggles[0].elements.controlledMenu,
             "clearTimeout"
           );
 
@@ -865,8 +864,8 @@ describe("BaseMenu", () => {
           menu.currentChild = 1;
           menu.elements.submenuToggles[0].open();
 
-          // Spy on the menu items's clearTimeout method.
-          const spy = vi.spyOn(menu.elements.menuItems[2], "clearTimeout");
+          // Spy on the menu's clearTimeout method.
+          const spy = vi.spyOn(menu, "clearTimeout");
 
           // Simulate the pointerenter event.
           simulatePointerEvent(
@@ -959,10 +958,9 @@ describe("BaseMenu", () => {
             menu.currentChild = 1;
             menu.elements.submenuToggles[0].open();
 
-            // Spy on the window's clearTimeout method.
+            // Spy on the menu's clearTimeout method.
             const spy = vi.spyOn(
-              menu.elements.submenuToggles[0].elements.controlledMenu.elements
-                .menuItems[1],
+              menu.elements.submenuToggles[0].elements.controlledMenu,
               "clearTimeout"
             );
 
@@ -997,10 +995,9 @@ describe("BaseMenu", () => {
             menu.currentChild = 1;
             menu.elements.submenuToggles[0].open();
 
-            // Spy on the window's clearTimeout method.
+            // Spy on the menu's clearTimeout method.
             const spy = vi.spyOn(
-              menu.elements.submenuToggles[0].elements.controlledMenu.elements
-                .menuItems[1],
+              menu.elements.submenuToggles[0].elements.controlledMenu,
               "clearTimeout"
             );
 
