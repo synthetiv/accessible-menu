@@ -1393,12 +1393,16 @@ class I {
   }
   /**
    * Clears the hover timeout.
+   *
+   * @protected
    */
   _clearTimeout() {
     clearTimeout(this._hoverTimeout);
   }
   /**
    * A wrapper for setTimeout that stores the timeout in the menu.
+   *
+   * @protected
    *
    * @param {Function} callback - The callback function to execute.
    * @param {number}   delay    - The delay time in milliseconds.
