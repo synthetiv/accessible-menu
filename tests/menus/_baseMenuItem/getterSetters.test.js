@@ -75,42 +75,4 @@ describe("BaseMenuItem getter/setters", () => {
       expect(menuItem.isSubmenuItem).toEqual(menuItem._submenu);
     });
   });
-
-  // Test BaseMenuItem hoverTimeout.
-  describe("hoverTimeout", () => {
-    // Test that hoverTimeout gets the hover timeout function.
-    it("should get the hover timeout function", () => {
-      // Create a new BaseMenu instance for testing.
-      const menu = new BaseMenu({
-        menuElement: document.querySelector("ul"),
-        submenuItemSelector: "li.dropdown",
-        containerElement: document.querySelector("nav"),
-        controllerElement: document.querySelector("button"),
-      });
-      initializeMenu(menu);
-
-      const menuItem = menu.elements.menuItems[0];
-
-      expect(menuItem.hoverTimeout).toEqual(menuItem._hoverTimeout);
-    });
-
-    // Test that hoverTimeout sets the hover timeout function.
-    it("should set the hover timeout function", () => {
-      // Create a new BaseMenu instance for testing.
-      const menu = new BaseMenu({
-        menuElement: document.querySelector("ul"),
-        submenuItemSelector: "li.dropdown",
-        containerElement: document.querySelector("nav"),
-        controllerElement: document.querySelector("button"),
-      });
-      initializeMenu(menu);
-
-      const menuItem = menu.elements.menuItems[0];
-
-      const newHoverTimeout = () => {};
-      menuItem.hoverTimeout = newHoverTimeout;
-
-      expect(menuItem.hoverTimeout).toEqual(newHoverTimeout);
-    });
-  });
 });

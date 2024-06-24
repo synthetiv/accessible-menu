@@ -121,7 +121,7 @@ describe("TopLinkDisclosureMenu", () => {
         });
 
         // Spy on the menu's clearTimeout method.
-        const spy = vi.spyOn(menu, "clearTimeout");
+        const spy = vi.spyOn(menu, "_clearTimeout");
 
         // Simulate the pointerenter event.
         simulatePointerEvent(
@@ -174,7 +174,7 @@ describe("TopLinkDisclosureMenu", () => {
         });
 
         // Spy on the menu's clearTimeout method.
-        const spy = vi.spyOn(menu, "clearTimeout");
+        const spy = vi.spyOn(menu, "_clearTimeout");
 
         // Simulate the pointerenter event.
         simulatePointerEvent(
@@ -277,7 +277,7 @@ describe("TopLinkDisclosureMenu", () => {
           });
 
           // Spy on clearTimeout.
-          const spy = vi.spyOn(menu, "clearTimeout");
+          const spy = vi.spyOn(menu, "_clearTimeout");
 
           // Simulate the pointerleave event.
           simulatePointerEvent(
@@ -300,7 +300,7 @@ describe("TopLinkDisclosureMenu", () => {
           });
 
           // Spy on clearTimeout.
-          const spy = vi.spyOn(menu, "clearTimeout");
+          const spy = vi.spyOn(menu, "_clearTimeout");
 
           // Simulate the pointerleave event.
           simulatePointerEvent(
@@ -741,7 +741,7 @@ describe("TopLinkDisclosureMenu", () => {
           // Spy on the menu's clearTimeout method.
           const spy = vi.spyOn(
             menu.elements.submenuToggles[0].elements.controlledMenu,
-            "clearTimeout"
+            "_clearTimeout"
           );
 
           // Simulate the pointerenter event.
@@ -912,7 +912,7 @@ describe("TopLinkDisclosureMenu", () => {
           menu.elements.submenuToggles[0].open();
 
           // Spy on the menu's clearTimeout method.
-          const spy = vi.spyOn(menu, "clearTimeout");
+          const spy = vi.spyOn(menu, "_clearTimeout");
 
           // Simulate the pointerenter event.
           simulatePointerEvent(
@@ -999,7 +999,7 @@ describe("TopLinkDisclosureMenu", () => {
           menu.elements.submenuToggles[0].open();
 
           // Spy on the menu's clearTimeout method.
-          const spy = vi.spyOn(menu, "clearTimeout");
+          const spy = vi.spyOn(menu, "_clearTimeout");
 
           // Simulate the pointerenter event.
           simulatePointerEvent(
@@ -1089,7 +1089,7 @@ describe("TopLinkDisclosureMenu", () => {
             // Spy on the window's clearTimeout method.
             const spy = vi.spyOn(
               menu.elements.submenuToggles[0].elements.controlledMenu,
-              "clearTimeout"
+              "_clearTimeout"
             );
 
             // Simulate the pointerleave event.
@@ -1125,7 +1125,7 @@ describe("TopLinkDisclosureMenu", () => {
             // Spy on the window's clearTimeout method.
             const spy = vi.spyOn(
               menu.elements.submenuToggles[0].elements.controlledMenu,
-              "clearTimeout"
+              "_clearTimeout"
             );
 
             // Simulate the pointerleave event.
