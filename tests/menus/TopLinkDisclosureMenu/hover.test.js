@@ -414,6 +414,194 @@ describe("TopLinkDisclosureMenu", () => {
         });
       });
     });
+    // Test when an open menu item is unhovered and rehovered before the timeout it stays open.
+    describe("when an open menu item is unhovered and rehovered before the timeout", () => {
+      it("should keep the menu open", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "on",
+        });
+
+        menu.currentChild = 1;
+        menu.elements.submenuToggles[0].open();
+
+        const openSpy = vi.spyOn(menu.elements.submenuToggles[0], "open");
+        const closeSpy = vi.spyOn(menu.elements.submenuToggles[0], "close");
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.menuItems[2].dom.item
+        );
+
+        // Advance the timers by half the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 2);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[2].dom.item
+        );
+
+        expect(openSpy).not.toHaveBeenCalled();
+        expect(closeSpy).not.toHaveBeenCalled();
+        expect(menu.elements.submenuToggles[0].isOpen).toBeTruthy();
+      });
+    });
+    // Test when an open menu item's subling is unhovered and rehovered before the timeout it stays open.
+    describe("when an open menu item's sibling is unhovered and rehovered before the timeout", () => {
+      it("should keep the menu open", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "on",
+        });
+
+        menu.currentChild = 1;
+        menu.elements.submenuToggles[0].open();
+
+        const openSpy = vi.spyOn(menu.elements.submenuToggles[0], "open");
+        const closeSpy = vi.spyOn(menu.elements.submenuToggles[0], "close");
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.menuItems[1].dom.item
+        );
+
+        // Advance the timers by half the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 2);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[1].dom.item
+        );
+
+        expect(openSpy).not.toHaveBeenCalled();
+        expect(closeSpy).not.toHaveBeenCalled();
+        expect(menu.elements.submenuToggles[0].isOpen).toBeTruthy();
+      });
+    });
+    // Test when an open menu item is unhovered, a sibling menu item is hovered, and then the original item rehovered before the timeout it stays open.
+    describe("when an open menu item is unhovered, a sibling menu item is hovered, and then the original item rehovered before the timeout", () => {
+      it("should keep the menu open", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "on",
+        });
+
+        menu.currentChild = 1;
+        menu.elements.submenuToggles[0].open();
+
+        const openSpy = vi.spyOn(menu.elements.submenuToggles[0], "open");
+        const closeSpy = vi.spyOn(menu.elements.submenuToggles[0], "close");
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.menuItems[2].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[0].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.menuItems[0].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[2].dom.item
+        );
+
+        expect(openSpy).not.toHaveBeenCalled();
+        expect(closeSpy).not.toHaveBeenCalled();
+        expect(menu.elements.submenuToggles[0].isOpen).toBeTruthy();
+      });
+    });
+    // Test when an open menu item's sibling is unhovered, a sibling menu item is hovered, and then the original item rehovered before the timeout it stays open.
+    describe("when an open menu item's sibling is unhovered, a sibling menu item is hovered, and then the original item rehovered before the timeout", () => {
+      it("should keep the menu open", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "on",
+        });
+
+        menu.currentChild = 1;
+        menu.elements.submenuToggles[0].open();
+
+        const openSpy = vi.spyOn(menu.elements.submenuToggles[0], "open");
+        const closeSpy = vi.spyOn(menu.elements.submenuToggles[0], "close");
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.menuItems[1].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[0].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.menuItems[0].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.menuItems[1].dom.item
+        );
+
+        expect(openSpy).not.toHaveBeenCalled();
+        expect(closeSpy).not.toHaveBeenCalled();
+        expect(menu.elements.submenuToggles[0].isOpen).toBeTruthy();
+      });
+    });
   });
   // Test hover type dynamic.
   describe("with hover type dynamic", () => {
@@ -1336,6 +1524,132 @@ describe("TopLinkDisclosureMenu", () => {
             expect(spy).toHaveBeenCalled();
           });
         });
+      });
+    });
+    // Test when an open menu item is unhovered and rehovered before the timeout it stays open.
+    describe("when an open menu item is unhovered and rehovered before the timeout", () => {
+      it("should keep the menu open", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "dynamic",
+        });
+
+        menu.currentChild = 1;
+        menu.elements.submenuToggles[0].open();
+        menu.elements.submenuToggles[0].elements.controlledMenu.currentChild = 1;
+        menu.elements.submenuToggles[0].elements.controlledMenu.elements.submenuToggles[0].open();
+
+        const openSpy = vi.spyOn(
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .submenuToggles[0],
+          "open"
+        );
+        const closeSpy = vi.spyOn(
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .submenuToggles[0],
+          "close"
+        );
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .menuItems[1].dom.item
+        );
+
+        // Advance the timers by half the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 2);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .menuItems[1].dom.item
+        );
+
+        expect(openSpy).not.toHaveBeenCalled();
+        expect(closeSpy).not.toHaveBeenCalled();
+        expect(
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .submenuToggles[0].isOpen
+        ).toBeTruthy();
+      });
+    });
+    // Test when an open menu item is unhovered, a sibling menu item is hovered, and then the original item rehovered before the timeout it stays open.
+    describe("when an open menu item is unhovered, a sibling menu item is hovered, and then the original item rehovered before the timeout", () => {
+      it("should keep the menu open", () => {
+        // Create a new TopLinkDisclosureMenu instance for testing.
+        const menu = new TopLinkDisclosureMenu({
+          menuElement: document.querySelector("ul"),
+          submenuItemSelector: "li.dropdown",
+          containerElement: document.querySelector("nav"),
+          controllerElement: document.querySelector("button"),
+          hoverType: "dynamic",
+        });
+
+        menu.currentChild = 1;
+        menu.elements.submenuToggles[0].open();
+        menu.elements.submenuToggles[0].elements.controlledMenu.currentChild = 1;
+        menu.elements.submenuToggles[0].elements.controlledMenu.elements.submenuToggles[0].open();
+
+        const openSpy = vi.spyOn(
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .submenuToggles[0],
+          "open"
+        );
+        const closeSpy = vi.spyOn(
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .submenuToggles[0],
+          "close"
+        );
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .menuItems[1].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .menuItems[0].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerleave event.
+        simulatePointerEvent(
+          "pointerleave",
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .menuItems[0].dom.item
+        );
+
+        // Advance the timers by a quarter of the menu's leave delay.
+        vi.advanceTimersByTime(menu.leaveDelay / 4);
+
+        // Simulate the pointerenter event.
+        simulatePointerEvent(
+          "pointerenter",
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .menuItems[1].dom.item
+        );
+
+        expect(openSpy).not.toHaveBeenCalled();
+        expect(closeSpy).not.toHaveBeenCalled();
+        expect(
+          menu.elements.submenuToggles[0].elements.controlledMenu.elements
+            .submenuToggles[0].isOpen
+        ).toBeTruthy();
       });
     });
   });
