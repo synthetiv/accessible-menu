@@ -224,6 +224,15 @@ class BaseMenu {
   _errors = [];
 
   /**
+   * A variable to hold the hover timeout function.
+   *
+   * @protected
+   *
+   * @type {?Function}
+   */
+  _hoverTimeout = null;
+
+  /**
    * Constructs a new `BaseMenu`.
    *
    * @param {object}             options                                   - The options for generating the menu.
@@ -1075,6 +1084,13 @@ class BaseMenu {
   }
 
   /**
+   * Clears the hover timeout.
+   */
+  _clearTimeout() {
+    clearTimeout(this._hoverTimeout);
+  }
+
+  /**
    * Handles focus events throughout the menu for proper menu use.
    *
    * - Adds a `focus` listener to every menu item so when it gains focus,
@@ -1132,6 +1148,7 @@ class BaseMenu {
         () => {
           this.currentEvent = "mouse";
           this.elements.rootMenu.blurChildren();
+          this._clearTimeout();
           this.focusChild(index);
         },
         { passive: true }
@@ -1219,8 +1236,8 @@ class BaseMenu {
 
           if (menuItem.isSubmenuItem) {
             if (this.enterDelay > 0) {
-              menuItem.clearTimeout();
-              menuItem.hoverTimeout = setTimeout(() => {
+              this._clearTimeout();
+              this._hoverTimeout = setTimeout(() => {
                 menuItem.elements.toggle.preview();
               }, this.enterDelay);
             } else {
@@ -1246,8 +1263,8 @@ class BaseMenu {
             this.focusCurrentChild();
 
             if (this.enterDelay > 0) {
-              menuItem.clearTimeout();
-              menuItem.hoverTimeout = setTimeout(() => {
+              this._clearTimeout();
+              this._hoverTimeout = setTimeout(() => {
                 menuItem.elements.toggle.preview();
               }, this.enterDelay);
             } else {
@@ -1266,8 +1283,8 @@ class BaseMenu {
 
           if (this.hoverType === "on") {
             if (this.leaveDelay > 0) {
-              menuItem.clearTimeout();
-              menuItem.hoverTimeout = setTimeout(() => {
+              this._clearTimeout();
+              this._hoverTimeout = setTimeout(() => {
                 this.currentEvent = "mouse";
                 menuItem.elements.toggle.close();
               }, this.leaveDelay);
@@ -1278,8 +1295,8 @@ class BaseMenu {
           } else if (this.hoverType === "dynamic") {
             if (!this.isTopLevel) {
               if (this.leaveDelay > 0) {
-                menuItem.clearTimeout();
-                menuItem.hoverTimeout = setTimeout(() => {
+                this._clearTimeout();
+                this._hoverTimeout = setTimeout(() => {
                   this.currentEvent = "mouse";
                   menuItem.elements.toggle.close();
                   this.focusCurrentChild();
@@ -1305,7 +1322,7 @@ class BaseMenu {
             (this.hoverType === "on" || this.hoverType === "dynamic") &&
             this.leaveDelay > 0
           ) {
-            menuItem.clearTimeout();
+            this._clearTimeout();
           }
         });
       }

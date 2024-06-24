@@ -1,8 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 /* global BaseMenu, BaseMenuToggle */
 
-import { isValidType } from "./validate.js";
-
 /**
  * A basic navigation link contained inside of a BaseMenu.
  */
@@ -47,15 +45,6 @@ class BaseMenuItem {
    * @type {boolean}
    */
   _submenu = false;
-
-  /**
-   * A variable to hold the hover timeout function.
-   *
-   * @protected
-   *
-   * @type {?Function}
-   */
-  _hoverTimeout = null;
 
   /**
    * Constructs a new `BaseMenuItem`.
@@ -130,30 +119,6 @@ class BaseMenuItem {
    */
   get isSubmenuItem() {
     return this._submenu;
-  }
-
-  /**
-   * A variable to hold the hover timeout function.
-   *
-   * @type {?Function}
-   *
-   * @see _hoverTimeout
-   */
-  get hoverTimeout() {
-    return this._hoverTimeout;
-  }
-
-  set hoverTimeout(value) {
-    isValidType("function", { value });
-
-    this._hoverTimeout = value;
-  }
-
-  /**
-   * Clears the hover timeout.
-   */
-  clearTimeout() {
-    clearTimeout(this._hoverTimeout);
   }
 
   /**
